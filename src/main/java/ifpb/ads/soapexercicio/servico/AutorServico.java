@@ -1,11 +1,10 @@
 package ifpb.ads.soapexercicio.servico;
 
-
 import ifpb.ads.soapexercicio.model.Autor;
 import ifpb.ads.soapexercicio.dao.AutorDAO;
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 /**
  * Document ClienteDAO
@@ -14,20 +13,21 @@ import javax.persistence.Persistence;
  * @author Wellington Lins Claudino Duarte
  * @mail wellingtonlins2013@gmail.com
  */
+@Stateless
 public class AutorServico {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("Soap_PU");
-    private AutorDAO autorDAO = new AutorDAO(emf);
+    @Inject
+    private AutorDAO autorDAO;
 
     public void create(Autor autor) {
-            autorDAO.create(autor);
+        autorDAO.create(autor);
     }
 
-    public void edit(Autor autor) throws Exception {
+    public void edit(Autor autor)  {
         autorDAO.edit(autor);
     }
 
-    public void destroy(long id) throws Exception {
+    public void destroy(long id) {
         autorDAO.destroy(id);
     }
 
@@ -39,9 +39,8 @@ public class AutorServico {
         return autorDAO.selecionarPorEmail(email);
     }
 
-
-      public List<Autor> findAll() {
-       return autorDAO.findAll();
-      }
+    public List<Autor> findAll() {
+        return autorDAO.findAll();
+    }
 
 }

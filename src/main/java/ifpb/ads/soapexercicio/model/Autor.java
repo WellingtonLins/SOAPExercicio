@@ -7,12 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author wellington
  */
 @Entity
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Autor.consultarTodos", query = "SELECT a FROM Autor a"),
             @NamedQuery(name = "Autor.consultarPorId", query = "SELECT a FROM Autor a WHERE a.id = :id"),
@@ -21,7 +23,7 @@ import javax.persistence.NamedQuery;
 public class Autor implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
     private String email;
