@@ -77,7 +77,8 @@ Funciona como um contrato de serviço entre cliente e servidor. Trata-se de um d
 ## Consumindo com java 
 
 
-Crie um projeto maven qualquer em java , pode ser web ou desktop, em seguida abra o terminal dentro do projeto e navegue ate a pasta src, uma vez no diretorio src digite os seguintes comandos: 
+Crie um projeto maven qualquer em java , pode ser web ou desktop.    
+Por exemplo vamos criar um projeto java SE chamado **SoapExerciccioCliente** em seguida abra o terminal dentro do projeto e navegue ate a pasta **SoapExerciccioCliente\src\main\java**, uma vez no diretorio digite os seguintes comandos: 
 
 wsimport -Xnocompile -keep -verbose  http://192.168.99.100:8080/ReservaSOAPService/ReservaSOAP?WSDL
 
@@ -89,6 +90,128 @@ Caso esteja usando o linux mude a url para `http://localhost:8080` ao inves de  
 
 Com o comando acima o java vai gerar com base no WSDL  toda a infraestrutura para que seja possivel consumir o serviço oferecido pela aplicação `SOAPExercicio` que disponibiliza a reserva de Livros.
 
+Abaixo segue a lista completa de classes gerados: 
+
+
+```
+Autor.java
+AutorSOAP.java
+AutorSOAPService.java
+BuscarAutorPorId.java
+BuscarAutorPorIdResponse.java
+BuscarLivroPorId.java
+BuscarLivroPorIdResponse.java
+BuscarLivroPorTitulo.java
+BuscarLivroPorTituloResponse.java
+BuscarReservaPorId.java
+BuscarReservaPorIdResponse.java
+BuscarReservaPorUsuario.java
+BuscarReservaPorUsuarioResponse.java
+BuscarTodasReservas.java
+BuscarTodasReservasResponse.java
+BuscarTodosAutores.java
+BuscarTodosAutoresResponse.java
+BuscarTodosLivros.java
+BuscarTodosLivrosResponse.java
+DeletarLivro.java
+DestroyJustOneReservaFromUser.java
+DestroyReserva.java
+DestroyReservaByID.java
+DestruirAutor.java
+EditarAutor.java
+EditarLivro.java
+EditarReserva1.java
+EditarReservaByUserAndTitle.java
+Livro.java
+LivroSOAP.java
+LivroSOAPService.java
+nomes.txt
+ObjectFactory.java
+package-info.java
+Reserva.java
+ReservaSOAP.java
+ReservaSOAPService.java
+SalvarAutor.java
+SalvarLivro.java
+SalvarReserva.java
+
+```
+
+###  Criando um Autor na Aplicação 
+
+Com as classes geradas podemos comsumir os serviços, vamos então criar um Autor e enviar ao web service:
+
+Crie uma Classe chamada ClienteAutor e faça como abaixo:
+```
+public class ClienteAutor {
+
+    public static void main(String[] args) {
+        AutorSOAPService service = new AutorSOAPService();
+        AutorSOAP autorSOAPPort = service.getAutorSOAPPort();
+        Autor autor = new Autor();
+        autor.setAbreviacao("JA");
+        autor.setEmail("alencar@gmail.com");
+        autor.setNome("Jose de Alencar");
+
+        autorSOAPPort.salvarAutor(autor);
+
+    }
+}
+```
+Com esse codigo acima criamos um autor, e quando rodamos o metodo principal dessa classe ele enviou esse autor para a aplicação e ele foi persistido na base de dados.
+
+
+###  Criando um Livro 
+
+
+Crie uma Classe chamada ClienteLivro e nela crie um  metodo main e deixe o codigo igual ao seguinte:
+```
+public class ClienteLivro {
+   LivroSOAPService service = new LivroSOAPService();
+   LivroSOAP livroSOAPPort = service.getLivroSOAPPort();
+
+        AutorSOAPService autorSOAPService = new AutorSOAPService();
+        AutorSOAP autorSOAPPort = autorSOAPService.getAutorSOAPPort();
+        
+       //criando o primeiro livro
+        Livro livro = new Livro();
+        livro.setDescricao("Java SOAP");
+        livro.setEdicao("3");
+        livro.setDisponivel(Boolean.TRUE);
+        livro.setTitulo("SOAP");
+        
+        //Buscando pelo autor cadastrado anteriormente.
+        Autor autor = autorSOAPPort.buscarAutorPorId(1l);
+
+        livro.getAutores().add(autor);
+        
+        livroSOAPPort.salvarLivro(livro);
+    }
+}
+```
+Com esse codigo acima criamos um livro que possui apenas um autor, ambos foram persistidos na base de dados do serviço remoto.
+
+
+###  Criando a Reserva de um  Livro 
+
+
+Crie uma Classe chamada ClienteReserva:
+
+```
+public class ClienteReserva {
+       ReservaSOAPService reservaSOAPService = new ReservaSOAPService();
+       ReservaSOAP reservaSOAPPort = reservaSOAPService.getReservaSOAPPort();
+      
+        Reserva reserva = new Reserva();
+        reserva.setUsuario("Joe Ramone");
+        reserva.setDataReserva(LocalDate.now().toString());
+        reservaSOAPPort.salvarReserva(reserva, "SOAP");
+    
+    }
+}
+```
+Com esse codigo acima criamos uma reserva  para o livro SOAP, que foi  persistida na base de dados do serviço remoto.
+Uma vez criada a reserva outros usuarios não podem  reservar o mesmo livro ate que a reserva anterior seja destruida.
 
 
 ## Documentação Docker
@@ -115,9 +238,5 @@ Nós usamos o [Git](https://git-scm.com/) .
 
 * Ao professor Ricardo Job 
 
-
-## Here I can listen you call my name: 
-
-wellingtonlins2013@gmail.com
 
 #### Tell me your problems and doubts...
