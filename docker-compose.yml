@@ -1,0 +1,23 @@
+version: '2'
+services:
+  postgres:
+    container_name: reserva-db-soap
+    image: reserva-db-img
+    build: ./postgres
+    ports:
+     - "5433:5432"
+    expose:
+     - 5433  
+    volumes:
+     - postgres-volume-reserva:/var/lib/postgresql/data/
+  web:
+    container_name: app-reserva-soap
+    build: .
+    image: reserva-img
+    ports:
+     - "8080:8080"
+    links:
+     - "postgres:banco"
+volumes:
+    postgres-volume-reserva:
+      driver: local
