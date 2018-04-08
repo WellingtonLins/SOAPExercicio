@@ -3,7 +3,7 @@
  A aplicação desenvolvida  consiste em um  sistema de reserva de livros.    
  
  Temos basicamenre três cruds javaweb  usando o servidor payara  e o postgres.   
-Como domínio da aplicação temos apenas três entidade: Autor,Livro e Reserva.
+Como domínio da aplicação temos apenas três entidades: Autor,Livro e Reserva. Usamos o padrão de projeto MVC e DAO.
 
  É uma simples aplicação para o uso didático,não foram abordados   
  conceitos de segurança e validação de dados por exemplo. A aplicação foi criada seguindo o "caminho feliz" , ou seja , quando estiver  implantada no servidor espera-se que o cliente preencha de forma correta os dados dos formulários.   
@@ -18,7 +18,7 @@ Professor da disciplina Ricardo Job
 
 
 
-## Prerequisitos
+## Pré-requisitos
 * Java instalado
 * Maven instalado
 * Docker instalado
@@ -56,13 +56,28 @@ Uma vez que aplicação estiver implantada você pode acessar as seguintes urls 
 #### Urls em um ambiente Linux:   
 
 
-* wsimport -Xnocompile -keep -verbose  http://localhost:8080/ReservaSOAPService/ReservaSOAP?WSDL
+* http://localhost:8080/ReservaSOAPService/ReservaSOAP?WSDL
 
-* wsimport -Xnocompile -keep -verbose http://localhost:8080/SoapExercicio/LivroSOAPService?WSDL
+* http://localhost:8080/SoapExercicio/LivroSOAPService?WSDL
 
-* wsimport -Xnocompile -keep -verbose http://localhost:8080/SoapExercicio/AutorSOAPService?WSDL
+* http://localhost:8080/SoapExercicio/AutorSOAPService?WSDL
 
 #### Urls em mbiente Windows(home)
+
+* http://192.168.99.100:8080/ReservaSOAPService/ReservaSOAP?WSDL
+
+* http://192.168.99.100:8080/SoapExercicio/LivroSOAPService?WSDL
+
+* http://192.168.99.100:8080/SoapExercicio/AutorSOAPService?WSDL
+
+Com esses endereços você vai ter acesso a Web Services Description Language (**WSDL**) que é justamente uma linguagem baseada em XML utilizada para descrever Web Services.
+
+Funciona como um contrato de serviço entre cliente e servidor. Trata-se de um documento escrito em XML que além de descrever o serviço, especifica como acessá-lo e quais os métodos disponíveis para o comsumo em qualquer linguagem de programação que suporte o protocolo `SOAP`.
+
+## Consumindo com java 
+
+
+Crie um projeto maven qualquer em java , pode ser web ou desktop, em seguida abra o terminal dentro do projeto e navegue ate a pasta src, uma vez no diretorio src digite os seguintes comandos: 
 
 wsimport -Xnocompile -keep -verbose  http://192.168.99.100:8080/ReservaSOAPService/ReservaSOAP?WSDL
 
@@ -70,6 +85,9 @@ wsimport -Xnocompile -keep -verbose  http://192.168.99.100:8080/SoapExercicio/Li
 
 wsimport -Xnocompile -keep -verbose  http://192.168.99.100:8080/SoapExercicio/AutorSOAPService?WSDL
 
+Caso esteja usando o linux mude a url para `http://localhost:8080` ao inves de   `http://192.168.99.100:8080`.
+
+Com o comando acima o java vai gerar com base no WSDL  toda a infraestrutura para que seja possivel consumir o serviço oferecido pela aplicação `SOAPExercicio` que disponibiliza a reserva de Livros.
 
 
 
