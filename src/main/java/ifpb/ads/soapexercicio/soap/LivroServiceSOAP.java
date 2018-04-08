@@ -48,7 +48,7 @@ public class LivroServiceSOAP {
     }
 
     @WebMethod(operationName = "buscarTodosLivros")
-    public List<Livro> findAll() {
+    public List<Livro> buscarTodosLivros() {
         return livroServico.findAll();
     }
 }

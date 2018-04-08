@@ -79,7 +79,7 @@ public class ReservaServicoSOAP {
     }
 
     @WebMethod(operationName = "buscarTodasReservas")
-    public List<Reserva> findAll() {
+    public List<Reserva> buscarTodasReservas() {
         return reservaServico.findAll();
     }
 

@@ -1,6 +1,5 @@
 package ifpb.ads.soapexercicio.dao;
 
-import ifpb.ads.soapexercicio.model.Autor;
 import ifpb.ads.soapexercicio.model.Livro;
 import java.util.List;
 import javax.ejb.Stateless;
