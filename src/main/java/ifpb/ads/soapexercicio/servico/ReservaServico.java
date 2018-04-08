@@ -55,12 +55,20 @@ public class ReservaServico {
         if (livroBuscado != null) {
             livroBuscado.setDisponivel(Boolean.FALSE);
             livroServico.edit(livroBuscado);
-        edit(reserva);
-
         }
+        reservaDAO.edit(reserva);
     }
 
     public void destroy(long id) {
+  
+        Reserva reserva = reservaDAO.findReserva(id);
+        
+        List<Livro> livros = reserva.getLivros();
+
+        for (Livro livro : livros) {
+            livro.setDisponivel(Boolean.TRUE);
+            livroServico.edit(livro);
+        }
         reservaDAO.destroy(id);
     }
 
@@ -80,8 +88,7 @@ public class ReservaServico {
     }
 
     public void destroy(Reserva reserva) {
-        LivroServico livroServico = new LivroServico();
-
+      
         List<Livro> livros = reserva.getLivros();
 
         for (Livro livro : livros) {

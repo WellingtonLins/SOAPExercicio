@@ -18,7 +18,7 @@ import javax.jws.WebService;
  */
 @WebService
 @Stateless
-public class ReservaServicoSOAP {
+public class ReservaSOAP {
 
     @Inject
     private ReservaServico reservaServico;
@@ -40,8 +40,8 @@ public class ReservaServicoSOAP {
     }
 
     @Oneway
-    @WebMethod(operationName = "editarReserva2")
-    public void edit2(@WebParam(name = "usuario") String usuario,
+    @WebMethod(operationName = "editarReservaByUserAndTitle")
+    public void editarReservaByUserAndTitle(@WebParam(name = "usuario") String usuario,
             @WebParam(name = "titulo") String titulo) {
 
         reservaServico.edit(usuario, titulo);
@@ -49,22 +49,22 @@ public class ReservaServicoSOAP {
     }
 
     @Oneway
-    @WebMethod(operationName = "deletarReserva1")
-    public void destroy1(@WebParam(name = "id") Long id) {
+    @WebMethod(operationName = "destroyReservaByID")
+    public void destroyReservaByID(@WebParam(name = "id") Long id) {
 
         reservaServico.destroy(id);
     }
 
     @Oneway
-    @WebMethod(operationName = "deletarReserva2")
-    public void destroy2(@WebParam(name = "reserva") Reserva reserva,
+    @WebMethod(operationName = "destroyJustOneReservaFromUser")
+    public void destroyJustOneReservaFromUser(@WebParam(name = "reserva") Reserva reserva,
             @WebParam(name = "titulo") String titulo) {
         reservaServico.destroy(reserva, titulo);
     }
 
     @Oneway
-    @WebMethod(operationName = "deletarReserva3")
-    public void destroy3(@WebParam(name = "reserva") Reserva reserva) {
+    @WebMethod(operationName = "destroyReserva")
+    public void destroyReserva(@WebParam(name = "reserva") Reserva reserva) {
         reservaServico.destroy(reserva);
     }
 

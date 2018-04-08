@@ -3,8 +3,8 @@ package ifpb.ads.soapexercicio.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -25,20 +23,21 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Reserva.consultarTodas", query = "SELECT r FROM Reserva r"),
-            @NamedQuery(name = "Reserva.consultarPorId", query = "SELECT r FROM Reserva r WHERE r.id = :id"),
+    @NamedQuery(name = "Reserva.consultarTodas", query = "SELECT r FROM Reserva r")
+    ,
+            @NamedQuery(name = "Reserva.consultarPorId", query = "SELECT r FROM Reserva r WHERE r.id = :id")
+    ,
             @NamedQuery(name = "Reserva.consultarPorUsuario", query = "SELECT r FROM Reserva r WHERE r.usuario = :usuario")})
 public class Reserva implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
+    @Column(unique = true)
     private String usuario;
-    
- 
+
     private LocalDate dataReserva;
-    
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<Livro> livros;
@@ -63,7 +62,7 @@ public class Reserva implements Serializable {
         this.usuario = usuario;
     }
 
-        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getDataReserva() {
         return dataReserva;
     }
@@ -71,10 +70,7 @@ public class Reserva implements Serializable {
     public void setDataReserva(LocalDate dataReserva) {
         this.dataReserva = dataReserva;
     }
-    
-    
-    
-    
+
     public List<Livro> getLivros() {
         return livros;
     }
@@ -95,8 +91,5 @@ public class Reserva implements Serializable {
     public String toString() {
         return "Reserva{" + "id=" + id + ", usuario=" + usuario + ", livros=" + livros + '}';
     }
-
-
-    
 
 }

@@ -8,6 +8,7 @@ package ifpb.ads.soapexercicio.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,31 +25,36 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Livro.consultarTodos", query = "SELECT a FROM Livro a"),
-            @NamedQuery(name = "Livro.consultarPorId", query = "SELECT a FROM Livro a WHERE a.id = :id"),
-            @NamedQuery(name = "Livro.consultarPorTitulo",query = "SELECT  a FROM Livro a WHERE a.titulo = :titulo")})
-public class Livro implements Serializable{
+    @NamedQuery(name = "Livro.consultarTodos", query = "SELECT a FROM Livro a")
+    ,
+            @NamedQuery(name = "Livro.consultarPorId", query = "SELECT a FROM Livro a WHERE a.id = :id")
+    ,
+            @NamedQuery(name = "Livro.consultarPorTitulo", query = "SELECT  a FROM Livro a WHERE a.titulo = :titulo")})
+public class Livro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String edicao;
+    @Column(unique = true)
     private String titulo;
     private String descricao;
-    private boolean  disponivel;
+    
+    private boolean disponivel;
     @ManyToMany
     private List<Autor> autores = new ArrayList<>();
 
     public Livro() {
-    disponivel = Boolean.TRUE;
+        disponivel = Boolean.TRUE;
     }
 
     public Livro(String edicao, String titulo, String descricao) {
         this.edicao = edicao;
         this.titulo = titulo;
         this.descricao = descricao;
+        disponivel = Boolean.TRUE;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -80,7 +86,7 @@ public class Livro implements Serializable{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
     public List<Autor> getAutores() {
         return autores;
     }

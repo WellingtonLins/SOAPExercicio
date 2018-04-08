@@ -1,6 +1,7 @@
 package ifpb.ads.soapexercicio.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,16 +17,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Autor.consultarTodos", query = "SELECT a FROM Autor a"),
-            @NamedQuery(name = "Autor.consultarPorId", query = "SELECT a FROM Autor a WHERE a.id = :id"),
-            @NamedQuery(name = "Autor.consultarPorNome",query = "SELECT  a FROM Autor a WHERE a.nome = :nome"),
-            @NamedQuery(name = "Autor.consultarPorEmail",query = "SELECT  a FROM Autor a WHERE a.email = :email")})
+    @NamedQuery(name = "Autor.consultarTodos", query = "SELECT a FROM Autor a")
+    ,
+            @NamedQuery(name = "Autor.consultarPorId", query = "SELECT a FROM Autor a WHERE a.id = :id")
+    ,
+            @NamedQuery(name = "Autor.consultarPorNome", query = "SELECT  a FROM Autor a WHERE a.nome = :nome")
+    ,
+            @NamedQuery(name = "Autor.consultarPorEmail", query = "SELECT  a FROM Autor a WHERE a.email = :email")})
 public class Autor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String nome;
+    @Column(unique = true)
     private String email;
     private String abreviacao;
 

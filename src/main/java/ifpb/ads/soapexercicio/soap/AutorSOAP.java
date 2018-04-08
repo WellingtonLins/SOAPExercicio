@@ -14,7 +14,7 @@ import javax.jws.WebService;
  * @author wellington
  */
 @WebService
-public class AutorServiceSOAP {
+public class AutorSOAP {
 
     @Inject
     private AutorServico autorServico;
