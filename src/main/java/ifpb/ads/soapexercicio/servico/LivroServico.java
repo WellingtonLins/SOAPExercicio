@@ -16,19 +16,18 @@ import javax.inject.Inject;
 @Stateless
 public class LivroServico {
 
-
-@Inject
+    @Inject
     private LivroDAO livroDAO;
 
     public void create(Livro autor) {
         livroDAO.create(autor);
     }
 
-    public void edit(Livro livro) throws Exception {
+    public void edit(Livro livro){
         livroDAO.edit(livro);
     }
 
-    public void destroy(long id) throws Exception {
+    public void destroy(long id)  {
         livroDAO.destroy(id);
     }
 
@@ -36,6 +35,9 @@ public class LivroServico {
         return livroDAO.findLivro(id);
     }
 
+    public Livro findLivroByTitle(String titulo) {
+        return livroDAO.selecionarPorTitulo(titulo);
+    }
 
     public List<Livro> findAll() {
         return livroDAO.findAll();

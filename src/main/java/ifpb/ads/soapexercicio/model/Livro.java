@@ -8,10 +8,7 @@ package ifpb.ads.soapexercicio.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,10 +35,12 @@ public class Livro implements Serializable{
     private String edicao;
     private String titulo;
     private String descricao;
+    private boolean  disponivel;
     @ManyToMany
     private List<Autor> autores = new ArrayList<>();
 
     public Livro() {
+    disponivel = Boolean.TRUE;
     }
 
     public Livro(String edicao, String titulo, String descricao) {
@@ -49,7 +48,7 @@ public class Livro implements Serializable{
         this.titulo = titulo;
         this.descricao = descricao;
     }
-
+    
     public long getId() {
         return id;
     }
@@ -81,7 +80,7 @@ public class Livro implements Serializable{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
+    
     public List<Autor> getAutores() {
         return autores;
     }
@@ -98,4 +97,11 @@ public class Livro implements Serializable{
         this.autores = autores;
     }
 
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
 }

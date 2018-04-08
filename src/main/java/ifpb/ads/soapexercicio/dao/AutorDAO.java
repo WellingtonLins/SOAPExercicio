@@ -32,8 +32,7 @@ public class AutorDAO {
 
         Autor autor = em.getReference(Autor.class, id);
         em.remove(autor);
-        em.getTransaction().commit();
-
+   
     }
 
     public Autor findCliente(long id) {

@@ -23,18 +23,17 @@ public class LivroDAO {
 
     }
 
-    public void edit(Livro livro) throws Exception {
+    public void edit(Livro livro) {
 
         livro = em.merge(livro);
 
     }
 
-    public void destroy(long id) throws Exception {
+    public void destroy(long id) {
 
         Livro livro = em.getReference(Livro.class, id);
 
         em.remove(livro);
-
 
     }
 
@@ -55,6 +54,14 @@ public class LivroDAO {
     public List<Livro> findAll() {
 
         return em.createNamedQuery("Livro.consultarTodos").getResultList();
+
+    }
+
+    public Livro selecionarPorTitulo(String titulo) {
+       
+            return (Livro) em.createNamedQuery("Livro.consultarPorTitulo")
+                    .setParameter("titulo", titulo)
+                    .getSingleResult();
 
     }
 }
